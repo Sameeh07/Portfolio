@@ -1,42 +1,91 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* ========== Base / Resets ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth; /* smooth anchor jumps */
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+body {
+  margin: 0;
+}
+
+/* Optional: nicer text selection on dark backgrounds */
+::selection {
+  background: rgba(217, 70, 239, 0.35); /* fuchsia-500-ish */
+  color: #fff;
+}
+
+/* ========== Scroll Container Tweaks ========== */
+/* The main scroll area in App.jsx uses id="page" */
+#page {
+  -webkit-overflow-scrolling: touch; /* smooth momentum on iOS */
+  overscroll-behavior-y: contain;    /* avoid rubber-banding into the browser UI */
+}
+
+/* ========== Testimonials: Two-Row Continuous Marquee ========== */
+/* Row wrapper keeps overflow hidden */
+.marquee-row {
+  overflow: hidden;
+}
+
+/* Track is the flex strip that slides horizontally */
+.marquee-track {
+  display: flex;
+  will-change: transform;
+  animation: marqueeScroll 36s linear infinite;
+}
+
+/* Bottom row runs reverse with a slightly different speed for variety */
+.marquee-track--reverse {
+  animation-direction: reverse;
+  animation-duration: 42s;
+}
+
+/* Individual testimonial cards sit inline with fixed min-widths (set via Tailwind in JSX).
+   This rule ensures they don't shrink. */
+.marquee-card {
+  flex: 0 0 auto;
+}
+
+/* We tripled the list in JSX, so translating by -33.333% creates a seamless loop */
+@keyframes marqueeScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+/* ========== Responsive Tweaks ========== */
+@media (max-width: 768px) {
+  .marquee-track {
+    animation-duration: 24s;
   }
-  to {
-    transform: rotate(360deg);
+  .marquee-track--reverse {
+    animation-duration: 28s;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* ========== Accessibility: Respect Reduced Motion ========== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .marquee-track,
+  .marquee-track--reverse {
+    animation: none !important;
+    transform: translateX(0) !important;
   }
 }
 
-.card {
-  padding: 2em;
+/* ========== Optional: Hide scrollbar in marquee rows only (keeps page scrollbars) ========== */
+/* Comment out if you prefer visible scrollbars everywhere */
+.marquee-row::-webkit-scrollbar {
+  display: none;
 }
-
-.read-the-docs {
-  color: #888;
+.marquee-row {
+  -ms-overflow-style: none;      /* IE/Edge */
+  scrollbar-width: none;         /* Firefox */
 }
