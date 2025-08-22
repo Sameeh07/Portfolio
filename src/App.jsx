@@ -257,7 +257,7 @@ export default function App() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
             >
-                            A CSE graduate with a specialization in Artificial Intelligence and Machine Learning from VTU University.
+
               I have hands-on experience developing AI-driven applications, implementing machine learning models,
               and fine-tuning large language models (LLMs) for domain-specific tasks. My skill set extends to MLOps
               practices—such as model deployment, monitoring, and pipeline automation—along with a solid foundation
