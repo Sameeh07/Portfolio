@@ -19,14 +19,12 @@ export default function App() {
     const el = scrollRef.current;
     if (!el) return;
 
-    // Back-to-top visibility + parallax
     const onScroll = () => {
       setShowBackToTop(el.scrollTop > 300);
       setScrollY(el.scrollTop);
     };
     el.addEventListener("scroll", onScroll, { passive: true });
 
-    // URL hash syncing via IntersectionObserver (within the scroll container)
     const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter(Boolean);
@@ -49,7 +47,6 @@ export default function App() {
 
     sections.forEach((s) => io.observe(s));
 
-    // Deep-link on load
     const initialHash = decodeURIComponent(window.location.hash || "").replace("#", "");
     if (initialHash && sectionIds.includes(initialHash)) {
       requestAnimationFrame(() => {
@@ -57,7 +54,6 @@ export default function App() {
       });
     }
 
-    // Respond to manual hash changes
     const onHashChange = () => {
       const h = decodeURIComponent(window.location.hash || "").replace("#", "");
       if (h && sectionIds.includes(h)) {
@@ -107,15 +103,15 @@ export default function App() {
     { quote: "Understands business goals, not just models. Highly recommended.", author: "Zoya Khan", role: "CEO, BrightOps" },
   ];
 
-  // Split testimonials into 2 alternating rows
   const rowA = testimonials.filter((_, i) => i % 2 === 0);
   const rowB = testimonials.filter((_, i) => i % 2 !== 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-gray-100 overflow-x-hidden">
       {/* Header */}
-      <header className="sticky top-0 z-50 h-16 backdrop-blur-md bg-slate-950/60 border-b border-slate-800">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+      <header className="sticky top-0 z-50 h-16 backdrop-blur-md bg-slate-950/60 border-b border-slate-800 overflow-x-hidden">
+  <div className="container mx-auto px-4 h-16 flex items-center justify-between w-full max-w-full overflow-x-hidden">
+
           <a
             href="#home"
             onClick={(e)=>{e.preventDefault(); safeScrollTo('home');}}
@@ -167,14 +163,14 @@ export default function App() {
         )}
       </header>
 
-      {/* PAGE SCROLLER */}
+      {/* PAGE SCROLLER (uses 100svh) */}
       <main
         ref={scrollRef}
         id="page"
-        className="snap-y snap-proximity h-[calc(100vh-4rem)] overflow-y-auto scroll-smooth"
+        className="snap-y snap-proximity h-[calc(100svh-4rem)] overflow-y-auto overflow-x-hidden scroll-smooth pb-[env(safe-area-inset-bottom)]"
       >
         {/* Hero */}
-        <section id="home" className="min-h-screen snap-start flex items-center scroll-mt-20">
+        <section id="home" className="min-h-[100svh] snap-start flex items-center scroll-mt-20">
           <div className="container mx-auto px-4 py-12 md:py-20">
             <div className="grid gap-10 md:grid-cols-2 items-center max-w-6xl mx-auto">
               <motion.div
@@ -217,7 +213,7 @@ export default function App() {
                 style={{ y: scrollY * -0.05 }}
               >
                 <img
-                  src="/grad.jpg"
+                  src="/x.png"
                   alt="Abdul Sameeh"
                   className="w-40 h-40 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full object-cover shadow-[0_30px_80px_-20px_rgba(168,85,247,0.45)] ring-4 ring-slate-900"
                 />
@@ -226,8 +222,8 @@ export default function App() {
           </div>
         </section>
 
-        {/* About */}
-        <section id="about" className="min-h-screen snap-start flex items-center scroll-mt-20">
+        {/* About + Education */}
+        <section id="about" className="min-h-[100svh] snap-start flex items-center scroll-mt-20">
           <div className="container mx-auto px-4 py-12 md:py-20 max-w-4xl">
             <motion.h2
               className="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
@@ -250,14 +246,13 @@ export default function App() {
               in cloud platforms and DevOps tools.
             </motion.p>
 
-            {/* Education header */}
             <motion.h3
               className="mt-10 text-xl md:text-2xl font-bold text-center mb-3"
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              Educational Qualification
+              Education
             </motion.h3>
             <motion.div
               className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 md:p-8 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.03)]"
@@ -274,7 +269,7 @@ export default function App() {
         </section>
 
         {/* Services */}
-        <section id="services" className="min-h-screen snap-start flex items-center scroll-mt-20">
+        <section id="services" className="min-h-[100svh] snap-start flex items-center scroll-mt-20">
           <div className="container mx-auto px-4 py-12 md:py-20">
             <motion.h2
               className="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
@@ -321,7 +316,7 @@ export default function App() {
         </section>
 
         {/* Work */}
-        <section id="work" className="min-h-screen snap-start flex items-center scroll-mt-20">
+        <section id="work" className="min-h-[100svh] snap-start flex items-center scroll-mt-20">
           <div className="container mx-auto px-4 py-12 md:py-20">
             <motion.h2
               className="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
@@ -368,7 +363,7 @@ export default function App() {
         </section>
 
         {/* Skills */}
-        <section id="skills" className="min-h-screen snap-start flex items-center scroll-mt-20">
+        <section id="skills" className="min-h-[100svh] snap-start flex items-center scroll-mt-20">
           <div className="container mx-auto px-4 py-12 md:py-20">
             <motion.h2
               className="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
@@ -391,7 +386,7 @@ export default function App() {
         </section>
 
         {/* Testimonials - two-row continuous marquees */}
-        <section id="testimonials" className="min-h-screen snap-start flex items-center scroll-mt-20">
+        <section id="testimonials" className="min-h-[100svh] snap-start flex items-center scroll-mt-20">
           <div className="container mx-auto px-4 py-12 md:py-20">
             <motion.h2
               className="text-2xl md:text-3xl font-bold text-center mb-8"
@@ -399,7 +394,7 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              Reviews
+              Testimonials
             </motion.h2>
 
             <div className="relative overflow-hidden space-y-6">
@@ -409,7 +404,7 @@ export default function App() {
                   {[...rowA, ...rowA, ...rowA].map((t, i) => (
                     <figure
                       key={`A-${i}`}
-                      className="marquee-card min-w-[280px] sm:min-w-[340px] md:min-w-[380px] mr-6 rounded-2xl border border-slate-800 bg-slate-900/60 p-6 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]"
+                      className="marquee-card min-w-[260px] sm:min-w-[320px] md:min-w-[360px] mr-6 rounded-2xl border border-slate-800 bg-slate-900/60 p-6 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]"
                     >
                       <div className="flex items-center gap-3 mb-4">
                         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-fuchsia-500 to-indigo-500 text-white grid place-content-center font-semibold">
@@ -432,7 +427,7 @@ export default function App() {
                   {[...rowB, ...rowB, ...rowB].map((t, i) => (
                     <figure
                       key={`B-${i}`}
-                      className="marquee-card min-w-[280px] sm:min-w-[340px] md:min-w-[380px] mr-6 rounded-2xl border border-slate-800 bg-slate-900/60 p-6 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]"
+                      className="marquee-card min-w-[260px] sm:min-w-[320px] md:min-w-[360px] mr-6 rounded-2xl border border-slate-800 bg-slate-900/60 p-6 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]"
                     >
                       <div className="flex items-center gap-3 mb-4">
                         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-fuchsia-500 to-indigo-500 text-white grid place-content-center font-semibold">
@@ -455,7 +450,7 @@ export default function App() {
         </section>
 
         {/* Contact */}
-        <section id="contact" className="min-h-screen snap-start flex items-center scroll-mt-20">
+        <section id="contact" className="min-h-[100svh] snap-start flex items-center scroll-mt-20">
           <div className="container mx-auto px-4 py-12 md:py-20 max-w-6xl">
             <motion.h2
               className="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
@@ -545,7 +540,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* Footer inside scroll container; reachable because snap is 'proximity' */}
+        {/* Footer inside scroll container */}
         <footer className="bg-slate-950/80 border-t border-slate-800 py-8">
           <div className="container mx-auto px-4 text-center">
             <p className="text-sm text-gray-400">© {new Date().getFullYear()} Abdul Sameeh K · All rights reserved</p>
@@ -564,7 +559,6 @@ export default function App() {
         <ChevronUp className="w-6 h-6" />
       </button>
 
-      {/* Local styles for marquees + tweaks */}
       <style jsx>{`
         .marquee-row { overflow: hidden; }
         .marquee-track {
@@ -574,12 +568,12 @@ export default function App() {
         }
         .marquee-track--reverse {
           animation-direction: reverse;
-          animation-duration: 42s; /* slight variation adds visual interest */
+          animation-duration: 42s;
         }
         .marquee-card { flex: 0 0 auto; }
         @keyframes marqueeScroll {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-33.333%); } /* we triple the list for seamless loop */
+          100% { transform: translateX(-33.333%); }
         }
         @media (max-width: 768px) {
           .marquee-track { animation-duration: 24s; }
