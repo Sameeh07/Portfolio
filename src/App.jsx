@@ -103,7 +103,7 @@ export default function App() {
 
   const projects = [
     { title: "Medical voice chatbot", desc: "Medical AI voice enabled chatbot, with conversational history.", link: "https://wizbot-ai-2o.onrender.com/", tags: ["OpenAI API", "Whisper", "Elevenlabs", "Flask", "React"], image: "/projects/wizbotai2.png" },
-    { title: "Music Recommendation System", desc: "Recommends bollywoood music based on user's image input.", link: "https://music-recommendation-system-musrec.onrender.com/", tags: ["Vision model", "gradio ui", "youtube embedding"], image: "/projects/musrecai.png" },
+    { title: "Music Recommendation System", desc: "Recommends bollywoood music based on user's image input.", link: "https://huggingface.co/spaces/SameehK/MusRec/", tags: ["Vision model", "gradio ui", "youtube embedding"], image: "/projects/musrecai.png" },
     { title: "Online medical consultation system", desc: "with live consultation features with doctor.", link: "https://github.com/Sameeh07/Online_medical_consultation", tags: ["mongodb", "expressjs", "reactjs" , "nodejs", "socket.io", "webrtc/peerjs"], image: "/projects/omcs.png" },
     { title: "Multiple Disease Prediction System", desc: "Disease Prediction using ML with 80% accuracy", link: "https://diseasediagnosisbysam.streamlit.app/", tags: ["LogistricRegression", "SVM", "Streamlit"], image: "/projects/diseasepred.png" },
     { title: "Hotel Reservation Cancellation Prediction", desc: "Reservation Cancellation Prediction ML model deployed using MLFlow, Docker, Jenkins and GCP", link: "https://github.com/Sameeh07/Hotel-Reservation-Prediction", tags: ["LightGBM", "GCP", "Docker", "Jenkins"], image: "/projects/image.png" },
