@@ -17,7 +17,7 @@ export default function App() {
 
   useEffect(() => {
     // Prevent body scroll to eliminate double scrollbar
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = '';
     
     const el = scrollRef.current;
     if (!el) return;
@@ -124,7 +124,7 @@ export default function App() {
   const rowB = testimonials.filter((_, i) => i % 2 !== 0);
 
   return (
-    <div className="h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-gray-100 flex flex-col overflow-hidden">
+    <div className="h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-gray-100 flex flex-col">
       {/* Header - Fixed positioning */}
       <header className="fixed top-0 left-0 right-0 z-50 h-16 backdrop-blur-md bg-slate-950/80 border-b border-slate-800">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -183,10 +183,7 @@ export default function App() {
       <main
         ref={scrollRef}
         id="page"
-        className="flex-1 snap-y snap-proximity overflow-y-auto overflow-x-hidden scroll-smooth pt-16"
-        style={{
-          height: '100vh',
-        }}
+        className="flex-1 scroll-smooth pt-16"
       >
         {/* Hero */}
         <section id="home" className="min-h-screen snap-start flex items-center">
