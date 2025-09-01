@@ -208,7 +208,7 @@ export default function App() {
                   Software Engineer specialized in AI & ML. I build AI-driven apps, fine-tune LLMs for domain tasks,
                   and ship reliable MLOps pipelines across AWS/GCP/Azure.
                 </p>
-                <div className="mt-6 flex flex-col sm:flex-row gap-3 items-center">
+                <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                   <a
                     href="#services"
                     onClick={(e)=>{e.preventDefault(); safeScrollTo('services');}}
@@ -241,7 +241,7 @@ export default function App() {
         </section>
 
         {/* About*/}
-        <section id="about" className="min-h-screen snap-start flex items-center">
+        <section id="about" className="min-h-screen snap-start flex items-center py-8">
           <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20 max-w-4xl">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
@@ -257,7 +257,6 @@ export default function App() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
             >
-
               I have hands-on experience developing AI-driven applications, implementing machine learning models,
               and fine-tuning large language models (LLMs) for domain-specific tasks. My skill set extends to MLOps
               practices—such as model deployment, monitoring, and pipeline automation—along with a solid foundation
@@ -287,7 +286,7 @@ export default function App() {
         </section>
 
         {/* Services */}
-        <section id="services" className="min-h-screen snap-start flex items-center">
+        <section id="services" className="min-h-screen snap-start flex items-center py-8">
           <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
@@ -308,7 +307,7 @@ export default function App() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.05 }}
                 >
-                  <div className="flex items-start gap-3">
+                                    <div className="flex items-start gap-3">
                     <span className="rounded-xl bg-fuchsia-900/30 p-2 text-fuchsia-300 flex-shrink-0">{s.icon}</span>
                     <h3 className="font-semibold text-base sm:text-lg flex-1 leading-tight">{s.title}</h3>
                   </div>
@@ -335,7 +334,7 @@ export default function App() {
         </section>
 
         {/* Work */}
-        <section id="work" className="min-h-screen snap-start flex items-center">
+        <section id="work" className="min-h-screen snap-start flex items-center py-8">
           <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
@@ -382,7 +381,7 @@ export default function App() {
         </section>
 
         {/* Skills */}
-        <section id="skills" className="min-h-screen snap-start flex items-center">
+        <section id="skills" className="min-h-screen snap-start flex items-center py-8">
           <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
@@ -405,7 +404,7 @@ export default function App() {
         </section>
 
         {/* Testimonials - two-row continuous marquees */}
-        <section id="testimonials" className="min-h-screen snap-start flex items-center">
+        <section id="testimonials" className="min-h-screen snap-start flex items-center py-8">
           <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 sm:mb-8"
@@ -469,7 +468,7 @@ export default function App() {
         </section>
 
         {/* Contact */}
-        <section id="contact" className="min-h-screen snap-start flex items-center">
+        <section id="contact" className="min-h-screen snap-start flex items-center py-8">
           <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20 max-w-6xl">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
@@ -516,7 +515,7 @@ export default function App() {
                   <input type="hidden" name="subject" value="New appointment request from portfolio" />
                   <p className="hidden"><label>Don't fill this out if you're human: <input name="bot-field" /></label></p>
 
-                  <LabeledInput id="name" name="name" label="Name" required />
+                                    <LabeledInput id="name" name="name" label="Name" required />
                   <LabeledInput id="email" name="email" type="email" label="Email" required />
 
                   <div className="mt-4">
@@ -590,7 +589,6 @@ export default function App() {
         </section>
 
         {/* Footer inside scroll container */}
-                {/* Footer inside scroll container */}
         <footer className="bg-slate-950/80 border-t border-slate-800 py-6 sm:py-8">
           <div className="container mx-auto px-4 text-center">
             <p className="text-xs sm:text-sm text-gray-400">© {new Date().getFullYear()} Abdul Sameeh K · All rights reserved</p>
@@ -727,3 +725,4 @@ function ToolIcon({ name }) {
   if (/(llm|rag|langchain|agent|n8n|nlp|vision|speech|robotics|lora|qlora|mcp)/.test(lower)) return <Brain className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-fuchsia-300" />;
   return <Boxes className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-gray-400" />;
 }
+                  
