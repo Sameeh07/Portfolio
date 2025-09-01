@@ -13,11 +13,16 @@ html {
 body {
   margin: 0;
   overflow: hidden; /* Prevent body scroll to avoid double scrollbars */
+  background: transparent;
 }
 
-/* Prevent horizontal overflow on all elements */
-* {
+/* Helpful default for images/media to avoid horizontal overflow */
+img,
+video,
+canvas,
+svg {
   max-width: 100%;
+  height: auto;
 }
 
 /* Optional: nicer text selection on dark backgrounds */
@@ -39,55 +44,43 @@ header {
   }
 }
 
-/* ========== Mobile Viewport Fixes ========== */
-/* Support for newer viewport units with fallbacks */
-.viewport-height {
-  height: 100vh; /* fallback */
-  height: 100dvh; /* dynamic viewport height */
-}
-
-/* ========== Scroll Container Tweaks ========== */
+/* ========== Scroll Container (#page) ========== */
 #page {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
-  /* Ensure no horizontal overflow */
   overflow-x: hidden !important;
-  padding-top: 4rem; /* Space for fixed header */
+  /* padding-top is in JSX (pt-16). Height is set inline (calc(100dvh - 4rem)). */
+  touch-action: pan-y;
 }
 
-/* ========== Mobile-specific fixes ========== */
+/* Hide scrollbar on the inner scroll container but keep scrollability */
+#page::-webkit-scrollbar {
+  display: none;
+}
+#page {
+  -ms-overflow-style: none; /* IE/Edge legacy */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* ========== Mobile-specific tweaks ========== */
 @media (max-width: 768px) {
-  /* Prevent zoom on input focus */
+  /* Prevent zoom on input focus (iOS) */
   input[type="text"],
   input[type="email"],
   textarea {
     font-size: 16px !important;
-    transform: scale(1);
+    transform: none;
   }
-  
+
   /* Better touch targets */
-  button, a {
+  button,
+  a {
     min-height: 44px;
   }
-  
-  /* Prevent horizontal scroll */
+
+  /* Prevent accidental horizontal scroll */
   .container {
     overflow-x: hidden;
-  }
-  
-  /* Reduce motion on mobile for better performance */
-  * {
-    animation-duration: 0.3s !important;
-    transition-duration: 0.3s !important;
-  }
-}
-
-/* ========== Very small screens ========== */
-@media (max-width: 480px) {
-  /* Further reduce motion */
-  * {
-    animation-duration: 0.2s !important;
-    transition-duration: 0.2s !important;
   }
 }
 
@@ -114,11 +107,15 @@ header {
 }
 
 @keyframes marqueeScroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-33.333%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
 }
 
-/* ========== Responsive Tweaks ========== */
+/* ========== Responsive Tweaks for marquee ========== */
 @media (max-width: 768px) {
   .marquee-track {
     animation-duration: 24s;
@@ -147,39 +144,14 @@ header {
     animation: none !important;
     transform: translateX(0) !important;
   }
-  
-  * {
-    animation: none !important;
-    transition: none !important;
-  }
 }
 
-/* ========== Hide scrollbar in marquee rows only ========== */
-.marquee-row::-webkit-scrollbar {
-  display: none;
-}
-.marquee-row {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* ========== Mobile Safari fixes ========== */
+/* ========== Mobile Safari viewport fixes ========== */
 @supports (-webkit-touch-callout: none) {
-  .viewport-height {
-    height: -webkit-fill-available;
-  }
-  
-  /* Fix iOS viewport issues */
+  /* Fit the scroll area under the fixed header */
   #page {
-    height: calc(100vh - 4rem);
     height: calc(100dvh - 4rem);
   }
-}
-
-/* ========== Prevent flash of unstyled content ========== */
-.container {
-  opacity: 1;
-  transition: opacity 0.3s ease;
 }
 
 /* ========== Focus styles for accessibility ========== */
@@ -196,7 +168,6 @@ textarea:focus {
   .marquee-track {
     animation: none !important;
   }
-  
   button {
     display: none;
   }
