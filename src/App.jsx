@@ -17,7 +17,7 @@ export default function App() {
 
   useEffect(() => {
     // Prevent body scroll to eliminate double scrollbar
-    document.body.style.overflow = '';
+    document.body.style.overflow = 'hidden';
     
     const el = scrollRef.current;
     if (!el) return;
