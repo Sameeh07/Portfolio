@@ -47,6 +47,7 @@ export default function App() {
 
     sections.forEach((s) => io.observe(s));
 
+    // Handle initial hash navigation with a delay to ensure DOM is ready
     const handleInitialNavigation = () => {
       const initialHash = decodeURIComponent(window.location.hash || "").replace("#", "");
       if (initialHash && sectionIds.includes(initialHash)) {
@@ -59,6 +60,7 @@ export default function App() {
       }
     };
 
+    // Run initial navigation after a short delay
     setTimeout(handleInitialNavigation, 200);
 
     const onHashChange = () => {
@@ -97,7 +99,7 @@ export default function App() {
   const projects = [
     { title: "Medical voice chatbot", desc: "Medical AI voice enabled chatbot, with conversational history.", link: "https://wizbot-ai-2o.onrender.com/", tags: ["OpenAI API", "Whisper", "Elevenlabs", "Flask", "React"], image: "/projects/wizbotai2.png" },
     { title: "Music Recommendation System", desc: "Recommends bollywoood music based on user's image input.", link: "https://huggingface.co/spaces/SameehK/MusRec/", tags: ["Vision model", "gradio ui", "youtube embedding"], image: "/projects/musrecai.png" },
-    { title: "Online medical consultation system", desc: "with live consultation features with doctor.", link: "https://github.com/Sameeh07/Online_medical_consultation", tags: ["mongodb", "expressjs", "reactjs" , "nodejs", "socket.io", "webrtc/peerjs"], image: "/projects/omcs.png" },
+    { title: "Online medical consultation system", desc: "with live consultation features with doctor.", link: "https://github.com/Sameeh07/Online_medical_consultation", tags: ["mongodb", "expressjs", "reactjs", "nodejs", "socket.io", "webrtc/peerjs"], image: "/projects/omcs.png" },
     { title: "Multiple Disease Prediction System", desc: "Disease Prediction using ML with 80% accuracy", link: "https://diseasediagnosisbysam.streamlit.app/", tags: ["LogistricRegression", "SVM", "Streamlit"], image: "/projects/diseasepred.png" },
     { title: "Hotel Reservation Cancellation Prediction", desc: "Reservation Cancellation Prediction ML model deployed using MLFlow, Docker, Jenkins and GCP", link: "https://github.com/Sameeh07/Hotel-Reservation-Prediction", tags: ["LightGBM", "GCP", "Docker", "Jenkins"], image: "/projects/image.png" },
   ];
@@ -117,13 +119,13 @@ export default function App() {
   const rowB = testimonials.filter((_, i) => i % 2 !== 0);
 
   return (
-    <>
-      {/* Fixed Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 h-16 backdrop-blur-md bg-slate-950/80 border-b border-slate-800 w-full">
-        <div className="h-full max-w-7xl mx-auto px-4 flex items-center justify-between">
+    <div className="h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-gray-100 flex flex-col">
+      {/* Header - Fixed positioning */}
+      <header className="fixed top-0 left-0 right-0 z-50 h-16 backdrop-blur-md bg-slate-950/80 border-b border-slate-800">
+        <div className="h-full px-4 flex items-center justify-between max-w-7xl mx-auto">
           <a
             href="#home"
-            onClick={(e)=>{e.preventDefault(); safeScrollTo('home');}}
+            onClick={(e) => { e.preventDefault(); safeScrollTo('home'); }}
             className="font-extrabold text-lg sm:text-xl md:text-2xl tracking-tight flex-shrink-0"
             style={{ fontFamily: "ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Roboto, sans-serif" }}
           >
@@ -132,12 +134,12 @@ export default function App() {
             </span>
           </a>
 
-          <nav className="hidden md:flex gap-4 lg:gap-6 text-sm font-medium">
+                    <nav className="hidden md:flex gap-4 lg:gap-6 text-sm font-medium">
             {['About', 'Services', 'Work', 'Skills', 'Testimonials', 'Contact'].map((item) => (
               <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                onClick={(e)=>{e.preventDefault(); safeScrollTo(item.toLowerCase());}}
+                onClick={(e) => { e.preventDefault(); safeScrollTo(item.toLowerCase()); }}
                 className="text-gray-300 hover:text-fuchsia-300 transition-colors whitespace-nowrap"
               >
                 {item}
@@ -155,13 +157,13 @@ export default function App() {
         </div>
 
         {mobileMenuOpen && (
-          <nav className="md:hidden absolute top-full left-0 right-0 bg-slate-950/95 border-b border-slate-800 backdrop-blur-xl">
+          <nav className="md:hidden absolute top-full left-0 right-0 bg-slate-950/95 border-b border-slate-800 backdrop-blur-xl z-50">
             <div className="flex flex-col py-2">
               {['About', 'Services', 'Work', 'Skills', 'Testimonials', 'Contact'].map((item) => (
                 <a
                   key={item}
                   href={`#${item.toLowerCase()}`}
-                  onClick={(e)=>{e.preventDefault(); safeScrollTo(item.toLowerCase());}}
+                  onClick={(e) => { e.preventDefault(); safeScrollTo(item.toLowerCase()); }}
                   className="px-6 py-3 text-gray-200 hover:bg-slate-900 hover:text-fuchsia-300 transition-colors"
                 >
                   {item}
@@ -172,14 +174,15 @@ export default function App() {
         )}
       </header>
 
-      {/* Main Content - With fixed header offset */}
+      {/* Main Content - Scrollable */}
       <main
         ref={scrollRef}
-        className="h-screen pt-16 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-y-auto overflow-x-hidden"
+        className="flex-1 overflow-y-auto overflow-x-hidden pt-16 scroll-smooth"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitScrollbar: { display: 'none' } }}
       >
         {/* Hero */}
-        <section id="home" className="min-h-[calc(100vh-4rem)] flex items-center">
-          <div className="w-full max-w-7xl mx-auto px-4 py-8 sm:py-12 md:py-20">
+        <section id="home" className="min-h-[calc(100vh-4rem)] flex items-center px-4 py-8">
+          <div className="w-full max-w-6xl mx-auto">
             <div className="grid gap-8 md:gap-10 md:grid-cols-2 items-center">
               <motion.div
                 className="order-2 md:order-1 text-center md:text-left"
@@ -194,21 +197,20 @@ export default function App() {
                   </span>
                 </h1>
                 <p className="mt-4 text-gray-300/90 text-sm sm:text-base md:text-lg leading-relaxed">
-                  Software Engineer specialized in AI & ML. I build AI-driven apps, fine-tune LLMs for domain tasks,
-                  and ship reliable MLOps pipelines across AWS/GCP/Azure.
+                  Software Engineer specialized in AI & ML. I build AI-driven apps, fine-tune LLMs for domain tasks, and ship reliable MLOps pipelines across AWS/GCP/Azure.
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                   <a
                     href="#services"
-                    onClick={(e)=>{e.preventDefault(); safeScrollTo('services');}}
-                    className="w-full sm:w-auto px-6 py-3 rounded-full font-semibold text-white bg-gradient-to-r from-fuchsia-600 to-indigo-600 hover:from-fuchsia-500 hover:to-indigo-500 shadow-lg shadow-fuchsia-900/30 text-center"
+                    onClick={(e) => { e.preventDefault(); safeScrollTo('services'); }}
+                    className="px-6 py-3 rounded-full font-semibold text-white bg-gradient-to-r from-fuchsia-600 to-indigo-600 hover:from-fuchsia-500 hover:to-indigo-500 shadow-lg shadow-fuchsia-900/30 text-center"
                   >
                     View Services
                   </a>
                   <a
                     href="#contact"
-                    onClick={(e)=>{e.preventDefault(); safeScrollTo('contact');}}
-                    className="w-full sm:w-auto px-6 py-3 rounded-full font-medium border border-fuchsia-500/60 text-fuchsia-200 hover:bg-fuchsia-950/30 text-center"
+                    onClick={(e) => { e.preventDefault(); safeScrollTo('contact'); }}
+                    className="px-6 py-3 rounded-full font-medium border border-fuchsia-500/60 text-fuchsia-200 hover:bg-fuchsia-950/30 text-center"
                   >
                     Book Appointment
                   </a>
@@ -229,9 +231,9 @@ export default function App() {
           </div>
         </section>
 
-        {/* About*/}
-        <section id="about" className="min-h-[calc(100vh-4rem)] flex items-center py-8">
-          <div className="w-full max-w-4xl mx-auto px-4">
+        {/* About */}
+        <section id="about" className="min-h-[calc(100vh-4rem)] flex items-center px-4 py-8">
+          <div className="w-full max-w-4xl mx-auto">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
               initial={{ opacity: 0, y: 10 }}
@@ -275,8 +277,8 @@ export default function App() {
         </section>
 
         {/* Services */}
-        <section id="services" className="min-h-[calc(100vh-4rem)] flex items-center py-8">
-          <div className="w-full max-w-7xl mx-auto px-4">
+        <section id="services" className="min-h-[calc(100vh-4rem)] flex items-center px-4 py-8">
+          <div className="w-full max-w-6xl mx-auto">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
               initial={{ opacity: 0, y: 10 }}
@@ -311,8 +313,8 @@ export default function App() {
                   </ul>
                   <a
                     href="#contact"
-                    onClick={(e)=>{e.preventDefault(); safeScrollTo('contact');}}
-                    className="mt-4 inline-block text-xs sm:text-sm text-fuchsia-300 font-medium hover:text-fuchsia-200"
+                    onClick={(e) => { e.preventDefault(); safeScrollTo('contact'); }}
+                                        className="mt-4 inline-block text-xs sm:text-sm text-fuchsia-300 font-medium hover:text-fuchsia-200"
                   >
                     Book appointment →
                   </a>
@@ -323,8 +325,8 @@ export default function App() {
         </section>
 
         {/* Work */}
-        <section id="work" className="min-h-[calc(100vh-4rem)] flex items-center py-8">
-          <div className="w-full max-w-7xl mx-auto px-4">
+        <section id="work" className="min-h-[calc(100vh-4rem)] flex items-center px-4 py-8">
+          <div className="w-full max-w-6xl mx-auto">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
               initial={{ opacity: 0, y: 10 }}
@@ -370,8 +372,8 @@ export default function App() {
         </section>
 
         {/* Skills */}
-        <section id="skills" className="min-h-[calc(100vh-4rem)] flex items-center py-8">
-          <div className="w-full max-w-7xl mx-auto px-4">
+        <section id="skills" className="min-h-[calc(100vh-4rem)] flex items-center px-4 py-8">
+          <div className="w-full max-w-6xl mx-auto">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
               initial={{ opacity: 0, y: 10 }}
@@ -392,9 +394,9 @@ export default function App() {
           </div>
         </section>
 
-        {/* Testimonials - two-row continuous marquees */}
-        <section id="testimonials" className="min-h-[calc(100vh-4rem)] flex items-center py-8">
-          <div className="w-full px-4">
+        {/* Testimonials */}
+        <section id="testimonials" className="min-h-[calc(100vh-4rem)] flex items-center px-4 py-8">
+          <div className="w-full max-w-7xl mx-auto">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 sm:mb-8"
               initial={{ opacity: 0, y: 10 }}
@@ -404,7 +406,7 @@ export default function App() {
               Reviews
             </motion.h2>
 
-            <div className="relative overflow-hidden space-y-4 sm:space-y-6 max-w-full">
+            <div className="relative overflow-hidden space-y-4 sm:space-y-6">
               {/* Top row */}
               <div className="marquee-row">
                 <div className="marquee-track">
@@ -415,7 +417,7 @@ export default function App() {
                     >
                       <div className="flex items-center gap-3 mb-3 sm:mb-4">
                         <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-fuchsia-500 to-indigo-500 text-white grid place-content-center font-semibold text-xs sm:text-sm">
-                          {t.author.split(' ').map(w=>w[0]).slice(0,2).join('')}
+                          {t.author.split(' ').map(w => w[0]).slice(0, 2).join('')}
                         </div>
                         <figcaption className="text-xs sm:text-sm">
                           <p className="font-medium text-gray-100">{t.author}</p>
@@ -438,7 +440,7 @@ export default function App() {
                     >
                       <div className="flex items-center gap-3 mb-3 sm:mb-4">
                         <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-fuchsia-500 to-indigo-500 text-white grid place-content-center font-semibold text-xs sm:text-sm">
-                          {t.author.split(' ').map(w=>w[0]).slice(0,2).join('')}
+                          {t.author.split(' ').map(w => w[0]).slice(0, 2).join('')}
                         </div>
                         <figcaption className="text-xs sm:text-sm">
                           <p className="font-medium text-gray-100">{t.author}</p>
@@ -457,8 +459,8 @@ export default function App() {
         </section>
 
         {/* Contact */}
-        <section id="contact" className="min-h-[calc(100vh-4rem)] flex items-center py-8">
-          <div className="w-full max-w-6xl mx-auto px-4">
+        <section id="contact" className="min-h-[calc(100vh-4rem)] flex items-center px-4 py-8">
+          <div className="w-full max-w-6xl mx-auto">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
               initial={{ opacity: 0, y: 10 }}
@@ -468,7 +470,7 @@ export default function App() {
               Book an Appointment
             </motion.h2>
 
-            <p className="text-center text-sm sm:text-base text-gray-300 mb-2">
+                        <p className="text-center text-sm sm:text-base text-gray-300 mb-2">
               Prefer email?{" "}
               <a className="text-fuchsia-300 hover:text-fuchsia-200 underline" href="mailto:abdulsameehk786@gmail.com?subject=Project%20inquiry">
                 Email me directly
@@ -544,42 +546,42 @@ export default function App() {
                 </ol>
               </aside>
             </div>
-            <div className="mt-8 flex justify-center items-center space-x-8">
-                <a
-                  href="https://linkedin.com/in/sameehk"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn Profile"
-                  className="text-gray-400 hover:text-blue-400 transition-colors"
-                >
-                  <Linkedin className="w-6 h-6" />
-                </a>
-                <a
-                  href="https://github.com/sameeh07"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub Profile"
-                  className="text-gray-400 hover:text-gray-300 transition-colors"
-                >
-                  <Github className="w-6 h-6" />
-                </a>
-                <a
-                  href="https://huggingface.co/SameehK"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Hugging Face Profile"
-                  className="text-gray-400 hover:text-yellow-400 transition-colors"
-                >
-                  <span className="text-2xl leading-none">🤗</span>
-                </a>
-              </div>
 
+            <div className="mt-8 flex justify-center items-center space-x-8">
+              <a
+                href="https://linkedin.com/in/sameehk"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn Profile"
+                className="text-gray-400 hover:text-blue-400 transition-colors"
+              >
+                <Linkedin className="w-6 h-6" />
+              </a>
+              <a
+                href="https://github.com/sameeh07"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub Profile"
+                className="text-gray-400 hover:text-gray-300 transition-colors"
+              >
+                <Github className="w-6 h-6" />
+              </a>
+              <a
+                href="https://huggingface.co/SameehK"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Hugging Face Profile"
+                className="text-gray-400 hover:text-yellow-400 transition-colors"
+              >
+                <span className="text-2xl leading-none">🤗</span>
+              </a>
+            </div>
           </div>
         </section>
 
-        {/* Footer inside scroll container */}
+        {/* Footer */}
         <footer className="bg-slate-950/80 border-t border-slate-800 py-6 sm:py-8">
-          <div className="w-full max-w-7xl mx-auto px-4 text-center">
+          <div className="px-4 text-center">
             <p className="text-xs sm:text-sm text-gray-400">© {new Date().getFullYear()} Abdul Sameeh K · All rights reserved</p>
           </div>
         </footer>
@@ -597,37 +599,56 @@ export default function App() {
       </button>
 
       <style jsx>{`
-        .marquee-row { 
+        /* Hide scrollbar */
+        main::-webkit-scrollbar {
+          display: none;
+        }
+        
+        .marquee-row {
           overflow: hidden;
           width: 100%;
         }
+        
         .marquee-track {
           display: flex;
           will-change: transform;
           animation: marqueeScroll 36s linear infinite;
           width: max-content;
         }
+        
         .marquee-track--reverse {
           animation-direction: reverse;
           animation-duration: 42s;
         }
-        .marquee-card { 
+        
+        .marquee-card {
           flex: 0 0 auto;
         }
+        
         @keyframes marqueeScroll {
           0% { transform: translateX(0); }
           100% { transform: translateX(-33.333%); }
         }
+        
         @media (max-width: 768px) {
-          .marquee-track { animation-duration: 24s; }
-          .marquee-track--reverse { animation-duration: 28s; }
+          .marquee-track {
+            animation-duration: 24s;
+          }
+          .marquee-track--reverse {
+            animation-duration: 28s;
+          }
         }
+        
         @media (max-width: 480px) {
-          .marquee-track { animation-duration: 20s; }
-          .marquee-track--reverse { animation-duration: 24s; }
+          .marquee-track {
+            animation-duration: 20s;
+          }
+          .marquee-track--reverse {
+            animation-duration: 24s;
+          }
         }
       `}</style>
-    </>
+    </div>
   );
 }
 
@@ -639,7 +660,7 @@ function Step({ n, title, text }) {
         {n}
       </div>
       <div className="flex-1 min-w-0">
-        <p className="font-medium text-gray-100 text-sm sm:text-base leading-tight">{title}</p>
+                <p className="font-medium text-gray-100 text-sm sm:text-base leading-tight">{title}</p>
         <p className="mt-1 text-xs sm:text-sm text-gray-300 leading-relaxed">{text}</p>
       </div>
     </li>
@@ -662,7 +683,7 @@ function LabeledInput({ id, name, type = "text", label, required }) {
 }
 
 function ProjectThumb({ title }) {
-  const initials = title.split(" ").map((w) => w[0]).slice(0,2).join("");
+  const initials = title.split(" ").map((w) => w[0]).slice(0, 2).join("");
   return (
     <div className="h-40 sm:h-48 bg-gradient-to-br from-fuchsia-600 to-indigo-600 grid place-content-center">
       <span className="text-xl sm:text-2xl font-bold text-white">{initials}</span>
