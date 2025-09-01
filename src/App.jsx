@@ -183,7 +183,8 @@ export default function App() {
       <main
         ref={scrollRef}
         id="page"
-        className="flex-1 scroll-smooth pt-16"
+        className="flex-1 snap-y snap-proximity overflow-y-auto overflow-x-hidden scroll-smooth pt-16"
+  style={{ height: '100vh' }}
       >
         {/* Hero */}
         <section id="home" className="min-h-screen snap-start flex items-center">
