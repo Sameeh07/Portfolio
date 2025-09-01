@@ -16,9 +16,6 @@ export default function App() {
   const currentSectionRef = useRef("");
 
   useEffect(() => {
-    // Prevent body scroll to eliminate double scrollbar
-    document.body.style.overflow = 'hidden';
-    
     const el = scrollRef.current;
     if (!el) return;
 
@@ -50,7 +47,6 @@ export default function App() {
 
     sections.forEach((s) => io.observe(s));
 
-    // Handle initial hash navigation with a delay to ensure DOM is ready
     const handleInitialNavigation = () => {
       const initialHash = decodeURIComponent(window.location.hash || "").replace("#", "");
       if (initialHash && sectionIds.includes(initialHash)) {
@@ -63,7 +59,6 @@ export default function App() {
       }
     };
 
-    // Run initial navigation after a short delay
     setTimeout(handleInitialNavigation, 200);
 
     const onHashChange = () => {
@@ -81,8 +76,6 @@ export default function App() {
       el.removeEventListener("scroll", onScroll);
       window.removeEventListener("hashchange", onHashChange);
       io.disconnect();
-      // Restore body scroll on cleanup
-      document.body.style.overflow = '';
     };
   }, []);
 
@@ -124,10 +117,10 @@ export default function App() {
   const rowB = testimonials.filter((_, i) => i % 2 !== 0);
 
   return (
-    <div className="h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-gray-100 flex flex-col overflow-hidden">
-      {/* Header - Fixed positioning */}
-      <header className="fixed top-0 left-0 right-0 z-50 h-16 backdrop-blur-md bg-slate-950/80 border-b border-slate-800">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+    <>
+      {/* Fixed Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 h-16 backdrop-blur-md bg-slate-950/80 border-b border-slate-800 w-full">
+        <div className="h-full max-w-7xl mx-auto px-4 flex items-center justify-between">
           <a
             href="#home"
             onClick={(e)=>{e.preventDefault(); safeScrollTo('home');}}
@@ -162,7 +155,7 @@ export default function App() {
         </div>
 
         {mobileMenuOpen && (
-          <nav className="md:hidden absolute top-full left-0 right-0 bg-slate-950/95 border-b border-slate-800 backdrop-blur-xl z-50">
+          <nav className="md:hidden absolute top-full left-0 right-0 bg-slate-950/95 border-b border-slate-800 backdrop-blur-xl">
             <div className="flex flex-col py-2">
               {['About', 'Services', 'Work', 'Skills', 'Testimonials', 'Contact'].map((item) => (
                 <a
@@ -179,19 +172,15 @@ export default function App() {
         )}
       </header>
 
-      {/* PAGE SCROLLER - now takes full height and has top padding */}
+      {/* Main Content - With fixed header offset */}
       <main
         ref={scrollRef}
-        id="page"
-        className="flex-1 snap-y snap-proximity overflow-y-auto overflow-x-hidden scroll-smooth pt-16"
-        style={{
-          height: '100vh',
-        }}
+        className="h-screen pt-16 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-y-auto overflow-x-hidden"
       >
         {/* Hero */}
-        <section id="home" className="min-h-screen snap-start flex items-center">
-          <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20">
-            <div className="grid gap-8 md:gap-10 md:grid-cols-2 items-center max-w-6xl mx-auto">
+        <section id="home" className="min-h-[calc(100vh-4rem)] flex items-center">
+          <div className="w-full max-w-7xl mx-auto px-4 py-8 sm:py-12 md:py-20">
+            <div className="grid gap-8 md:gap-10 md:grid-cols-2 items-center">
               <motion.div
                 className="order-2 md:order-1 text-center md:text-left"
                 initial={{ opacity: 0, y: 16 }}
@@ -241,8 +230,8 @@ export default function App() {
         </section>
 
         {/* About*/}
-        <section id="about" className="min-h-screen snap-start flex items-center py-8">
-          <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20 max-w-4xl">
+        <section id="about" className="min-h-[calc(100vh-4rem)] flex items-center py-8">
+          <div className="w-full max-w-4xl mx-auto px-4">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
               initial={{ opacity: 0, y: 10 }}
@@ -286,8 +275,8 @@ export default function App() {
         </section>
 
         {/* Services */}
-        <section id="services" className="min-h-screen snap-start flex items-center py-8">
-          <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20">
+        <section id="services" className="min-h-[calc(100vh-4rem)] flex items-center py-8">
+          <div className="w-full max-w-7xl mx-auto px-4">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
               initial={{ opacity: 0, y: 10 }}
@@ -297,7 +286,7 @@ export default function App() {
               Services
             </motion.h2>
 
-            <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
+            <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
               {services.map((s, i) => (
                 <motion.div
                   key={s.title}
@@ -307,7 +296,7 @@ export default function App() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.05 }}
                 >
-                                    <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-3">
                     <span className="rounded-xl bg-fuchsia-900/30 p-2 text-fuchsia-300 flex-shrink-0">{s.icon}</span>
                     <h3 className="font-semibold text-base sm:text-lg flex-1 leading-tight">{s.title}</h3>
                   </div>
@@ -334,8 +323,8 @@ export default function App() {
         </section>
 
         {/* Work */}
-        <section id="work" className="min-h-screen snap-start flex items-center py-8">
-          <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20">
+        <section id="work" className="min-h-[calc(100vh-4rem)] flex items-center py-8">
+          <div className="w-full max-w-7xl mx-auto px-4">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
               initial={{ opacity: 0, y: 10 }}
@@ -345,7 +334,7 @@ export default function App() {
               Featured Projects
             </motion.h2>
 
-            <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+            <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {projects.map((p, i) => (
                 <motion.a
                   key={p.title}
@@ -381,8 +370,8 @@ export default function App() {
         </section>
 
         {/* Skills */}
-        <section id="skills" className="min-h-screen snap-start flex items-center py-8">
-          <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20">
+        <section id="skills" className="min-h-[calc(100vh-4rem)] flex items-center py-8">
+          <div className="w-full max-w-7xl mx-auto px-4">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
               initial={{ opacity: 0, y: 10 }}
@@ -392,7 +381,7 @@ export default function App() {
               Skills
             </motion.h2>
 
-            <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+            <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               <SkillCard title="Languages" items={["Python", "JavaScript", "C", "C++", "Java"]} />
               <SkillCard title="Frontend" items={["HTML", "CSS", "React.js"]} />
               <SkillCard title="Databases" items={["MySQL", "MongoDB", "PostgreSQL"]} />
@@ -404,8 +393,8 @@ export default function App() {
         </section>
 
         {/* Testimonials - two-row continuous marquees */}
-        <section id="testimonials" className="min-h-screen snap-start flex items-center py-8">
-          <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20">
+        <section id="testimonials" className="min-h-[calc(100vh-4rem)] flex items-center py-8">
+          <div className="w-full px-4">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 sm:mb-8"
               initial={{ opacity: 0, y: 10 }}
@@ -415,7 +404,7 @@ export default function App() {
               Reviews
             </motion.h2>
 
-            <div className="relative overflow-hidden space-y-4 sm:space-y-6">
+            <div className="relative overflow-hidden space-y-4 sm:space-y-6 max-w-full">
               {/* Top row */}
               <div className="marquee-row">
                 <div className="marquee-track">
@@ -468,8 +457,8 @@ export default function App() {
         </section>
 
         {/* Contact */}
-        <section id="contact" className="min-h-screen snap-start flex items-center py-8">
-          <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20 max-w-6xl">
+        <section id="contact" className="min-h-[calc(100vh-4rem)] flex items-center py-8">
+          <div className="w-full max-w-6xl mx-auto px-4">
             <motion.h2
               className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8"
               initial={{ opacity: 0, y: 10 }}
@@ -515,7 +504,7 @@ export default function App() {
                   <input type="hidden" name="subject" value="New appointment request from portfolio" />
                   <p className="hidden"><label>Don't fill this out if you're human: <input name="bot-field" /></label></p>
 
-                                    <LabeledInput id="name" name="name" label="Name" required />
+                  <LabeledInput id="name" name="name" label="Name" required />
                   <LabeledInput id="email" name="email" type="email" label="Email" required />
 
                   <div className="mt-4">
@@ -590,7 +579,7 @@ export default function App() {
 
         {/* Footer inside scroll container */}
         <footer className="bg-slate-950/80 border-t border-slate-800 py-6 sm:py-8">
-          <div className="container mx-auto px-4 text-center">
+          <div className="w-full max-w-7xl mx-auto px-4 text-center">
             <p className="text-xs sm:text-sm text-gray-400">© {new Date().getFullYear()} Abdul Sameeh K · All rights reserved</p>
           </div>
         </footer>
@@ -638,7 +627,7 @@ export default function App() {
           .marquee-track--reverse { animation-duration: 24s; }
         }
       `}</style>
-    </div>
+    </>
   );
 }
 
@@ -725,4 +714,3 @@ function ToolIcon({ name }) {
   if (/(llm|rag|langchain|agent|n8n|nlp|vision|speech|robotics|lora|qlora|mcp)/.test(lower)) return <Brain className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-fuchsia-300" />;
   return <Boxes className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-gray-400" />;
 }
-                  
