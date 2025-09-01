@@ -203,51 +203,53 @@ export default function App() {
 
   const testimonials = [
     {
-      quote: "Delivered a production-ready pipeline in weeks. Clear, pragmatic, fast.",
-      author: "Arjun Mehta",
-      role: "CTO, Nimbus SaaS",
+      quote: "Abdul Sameeh’s academic and professional growth in the field of Artificial Intelligence and Machine Learning (AIML) is with strong technical skills, excellent problem-solving abilities, and an impressive capacity to develop innovative solutions to complex problems.
+Abdul is also a dedicated team player with effective communication skills, making him a valuable contributor in collaborative environments. His commitment to learning, creativity, and professionalism make him an asset to any AIML-related project or organization.
+I have no doubt that Abdul will excel in his future endeavors, and I wholeheartedly recommend him for any role in this domain.",
+      author: "Dr. Zakir B",
+      role: "Head, AIML PACE",
     },
-    {
-      quote:
-        "Our LLM answers improved massively with his retrieval tuning.",
-      author: "Priya Nair",
-      role: "Head of Support, Helply",
-    },
-    {
-      quote:
-        "Great communicator — scoped, built, and shipped ahead of plan.",
-      author: "Rahul Verma",
-      role: "Product Lead, FinX",
-    },
-    {
-      quote: "CI/CD for ML with proper monitoring — game changer for us.",
-      author: "Sana Iqbal",
-      role: "Data Science Manager, Retail.ai",
-    },
-    {
-      quote:
-        "React site + RAG backend in under two weeks. Impeccable quality.",
-      author: "Ethan Cole",
-      role: "Founder, OpsBoard",
-    },
-    {
-      quote:
-        "Clean APIs and docs; our team could extend features easily.",
-      author: "Neha Gupta",
-      role: "Engineering Manager, MedAssist",
-    },
-    {
-      quote:
-        "Edge vision pipeline is rock solid and cost-efficient.",
-      author: "Vikram Rao",
-      role: "VP Operations, FabTech",
-    },
-    {
-      quote:
-        "Understands business goals, not just models. Highly recommended.",
-      author: "Zoya Khan",
-      role: "CEO, BrightOps",
-    },
+    // {
+    //   quote:
+    //     "Our LLM answers improved massively with his retrieval tuning.",
+    //   author: "Priya Nair",
+    //   role: "Head of Support, Helply",
+    // },
+    // {
+    //   quote:
+    //     "Great communicator — scoped, built, and shipped ahead of plan.",
+    //   author: "Rahul Verma",
+    //   role: "Product Lead, FinX",
+    // },
+    // {
+    //   quote: "CI/CD for ML with proper monitoring — game changer for us.",
+    //   author: "Sana Iqbal",
+    //   role: "Data Science Manager, Retail.ai",
+    // },
+    // {
+    //   quote:
+    //     "React site + RAG backend in under two weeks. Impeccable quality.",
+    //   author: "Ethan Cole",
+    //   role: "Founder, OpsBoard",
+    // },
+    // {
+    //   quote:
+    //     "Clean APIs and docs; our team could extend features easily.",
+    //   author: "Neha Gupta",
+    //   role: "Engineering Manager, MedAssist",
+    // },
+    // {
+    //   quote:
+    //     "Edge vision pipeline is rock solid and cost-efficient.",
+    //   author: "Vikram Rao",
+    //   role: "VP Operations, FabTech",
+    // },
+    // {
+    //   quote:
+    //     "Understands business goals, not just models. Highly recommended.",
+    //   author: "Zoya Khan",
+    //   role: "CEO, BrightOps",
+    // },
   ];
 
   const rowA = testimonials.filter((_, i) => i % 2 === 0);
@@ -278,7 +280,7 @@ export default function App() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex gap-4 lg:gap-6 text-sm font-medium">
-            {["About", "Services", "Work", "Skills", "Testimonials", "Contact"].map(
+            {["About", "Services", "Work", "Skills", "Recommendations", "Contact"].map(
               (item) => (
                 <a
                   key={item}
@@ -668,7 +670,7 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              Reviews
+              Recommendations
             </motion.h2>
 
             <div className="relative overflow-hidden space-y-4 sm:space-y-6">
