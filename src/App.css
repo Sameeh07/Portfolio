@@ -12,24 +12,12 @@ html {
 
 body {
   margin: 0;
-  overflow: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden; /* Prevent body scroll to avoid double scrollbars */
 }
 
 /* Prevent horizontal overflow on all elements */
 * {
   max-width: 100%;
-}
-
-/* Hide scrollbar globally for main container */
-main {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-}
-
-main::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
 }
 
 /* Optional: nicer text selection on dark backgrounds */
@@ -44,10 +32,27 @@ header {
   -webkit-backdrop-filter: blur(12px);
 }
 
+/* Ensure fixed header works on all devices */
+@supports (-webkit-touch-callout: none) {
+  header {
+    position: fixed !important;
+  }
+}
+
 /* ========== Mobile Viewport Fixes ========== */
+/* Support for newer viewport units with fallbacks */
 .viewport-height {
-  height: 100vh;
+  height: 100vh; /* fallback */
   height: 100dvh; /* dynamic viewport height */
+}
+
+/* ========== Scroll Container Tweaks ========== */
+#page {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  /* Ensure no horizontal overflow */
+  overflow-x: hidden !important;
+  padding-top: 4rem; /* Space for fixed header */
 }
 
 /* ========== Mobile-specific fixes ========== */
@@ -57,24 +62,32 @@ header {
   input[type="email"],
   textarea {
     font-size: 16px !important;
+    transform: scale(1);
   }
-
+  
   /* Better touch targets */
   button, a {
     min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
   }
-
-  /* Ensure no horizontal scroll */
-  body, html {
+  
+  /* Prevent horizontal scroll */
+  .container {
     overflow-x: hidden;
   }
-
-  /* Improve performance */
+  
+  /* Reduce motion on mobile for better performance */
   * {
-    -webkit-tap-highlight-color: transparent;
+    animation-duration: 0.3s !important;
+    transition-duration: 0.3s !important;
+  }
+}
+
+/* ========== Very small screens ========== */
+@media (max-width: 480px) {
+  /* Further reduce motion */
+  * {
+    animation-duration: 0.2s !important;
+    transition-duration: 0.2s !important;
   }
 }
 
@@ -101,7 +114,7 @@ header {
 }
 
 @keyframes marqueeScroll {
-  0% { transform: translateX(0); }
+  0%   { transform: translateX(0); }
   100% { transform: translateX(-33.333%); }
 }
 
@@ -129,7 +142,6 @@ header {
   html {
     scroll-behavior: auto;
   }
-  
   .marquee-track,
   .marquee-track--reverse {
     animation: none !important;
@@ -142,44 +154,50 @@ header {
   }
 }
 
+/* ========== Hide scrollbar in marquee rows only ========== */
+.marquee-row::-webkit-scrollbar {
+  display: none;
+}
+.marquee-row {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ========== Mobile Safari fixes ========== */
+@supports (-webkit-touch-callout: none) {
+  .viewport-height {
+    height: -webkit-fill-available;
+  }
+  
+  /* Fix iOS viewport issues */
+  #page {
+    height: calc(100vh - 4rem);
+    height: calc(100dvh - 4rem);
+  }
+}
+
+/* ========== Prevent flash of unstyled content ========== */
+.container {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
 /* ========== Focus styles for accessibility ========== */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
+button:focus,
+a:focus,
+input:focus,
+textarea:focus {
   outline: 2px solid #a855f7;
   outline-offset: 2px;
 }
 
-/* ========== Print styles ========== */
+/* ========== Print styles (optional) ========== */
 @media print {
   .marquee-track {
     animation: none !important;
   }
   
-  button,
-  .back-to-top {
+  button {
     display: none;
   }
-}
-
-/* ========== Utility Classes ========== */
-.overflow-x-hidden {
-  overflow-x: hidden !important;
-}
-
-.overflow-y-auto {
-  overflow-y: auto !important;
-}
-
-.min-w-0 {
-  min-width: 0;
-}
-
-/* Ensure sections take proper height */
-section {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
