@@ -203,9 +203,7 @@ export default function App() {
 
   const testimonials = [
     {
-      quote: "Abdul Sameeh’s academic and professional growth in the field of Artificial Intelligence and Machine Learning (AIML) is with strong technical skills, excellent problem-solving abilities, and an impressive capacity to develop innovative solutions to complex problems.
-Abdul is also a dedicated team player with effective communication skills, making him a valuable contributor in collaborative environments. His commitment to learning, creativity, and professionalism make him an asset to any AIML-related project or organization.
-I have no doubt that Abdul will excel in his future endeavors, and I wholeheartedly recommend him for any role in this domain.",
+      quote: "Abdul Sameeh’s academic and professional growth in the field of Artificial Intelligence and Machine Learning (AIML) is with strong technical skills, excellent problem-solving abilities, and an impressive capacity to develop innovative solutions to complex problems.Abdul is also a dedicated team player with effective communication skills, making him a valuable contributor in collaborative environments. His commitment to learning, creativity, and professionalism make him an asset to any AIML-related project or organization. I have no doubt that Abdul will excel in his future endeavors, and I wholeheartedly recommend him for any role in this domain.",
       author: "Dr. Zakir B",
       role: "Head, AIML PACE",
     },
