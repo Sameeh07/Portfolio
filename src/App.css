@@ -1,168 +1,157 @@
-/* ========== Base / Resets ========== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
-  font-size: 16px;
+/* ========== Main Layout Structure ========== */
+main {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
   overflow-x: hidden;
-}
-
-body {
-  margin: 0;
-  overflow: hidden; /* Prevent body scroll to avoid double scrollbars */
-  width: 100%;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
   position: relative;
 }
 
-/* Prevent horizontal overflow on all elements */
-* {
+/* Prevent horizontal scroll on all elements */
+section, div, article, aside, nav, header, footer {
   max-width: 100%;
-}
-
-/* Prevent horizontal scroll */
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
   overflow-x: hidden;
 }
 
-/* Optional: nicer text selection on dark backgrounds */
-::selection {
-  background: rgba(217, 70, 239, 0.35);
-  color: #fff;
+/* ========== Container Styles ========== */
+.container,
+.max-w-7xl,
+.max-w-6xl,
+.max-w-4xl {
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* ========== Fixed Header Styles ========== */
+/* ========== Header Styles ========== */
 header {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  width: 100%;
-  position: fixed !important;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  width: 100%;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-/* Ensure fixed header works on all devices */
-@supports (-webkit-touch-callout: none) {
-  header {
-    position: fixed !important;
+/* ========== Section Heights ========== */
+section {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ========== Typography ========== */
+h1, h2, h3, h4, h5, h6, p, span, a {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+/* ========== Images ========== */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ========== Forms ========== */
+input, textarea, select, button {
+  max-width: 100%;
+}
+
+/* Prevent zoom on iOS */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select {
+  font-size: 16px !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* ========== Mobile Navigation ========== */
+@media (max-width: 768px) {
+  nav.absolute {
+    width: 100%;
+    left: 0;
+    right: 0;
   }
 }
 
-/* ========== Mobile Viewport Fixes ========== */
-/* Support for newer viewport units with fallbacks */
-.viewport-height {
-  height: 100vh; /* fallback */
-  height: 100dvh; /* dynamic viewport height */
+/* ========== Responsive Utilities ========== */
+@media (max-width: 1024px) {
+  .container,
+  .max-w-7xl,
+  .max-w-6xl,
+  .max-w-4xl {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
-/* Main app container */
-.h-screen {
-  height: 100vh;
-  height: 100dvh;
-}
-
-/* ========== Scroll Container Tweaks ========== */
-#page {
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
-  /* Ensure no horizontal overflow */
-  overflow-x: hidden !important;
-  padding-top: 4rem; /* Space for fixed header */
-  width: 100%;
-  position: relative;
-}
-
-/* Section padding adjustments for mobile */
-section {
-  padding-left: 1rem;
-  padding-right: 1rem;
-  overflow-x: hidden;
-}
-
-/* ========== Mobile-specific fixes ========== */
 @media (max-width: 768px) {
   html {
     font-size: 15px;
   }
   
-  /* Prevent zoom on input focus */
-  input[type="text"],
-  input[type="email"],
-  textarea {
-    font-size: 16px !important;
-    transform: scale(1);
+  .container,
+  .max-w-7xl,
+  .max-w-6xl,
+  .max-w-4xl {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
   
-  /* Better touch targets */
-  button, a {
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  /* Force single column layouts */
+  .grid {
+    grid-template-columns: 1fr !important;
   }
   
-  /* Container padding */
-  .container {
-    padding: 0 0.75rem;
-  }
-  
-  /* Reduce motion on mobile for better performance */
-  * {
-    animation-duration: 0.3s !important;
-    transition-duration: 0.3s !important;
-  }
-  
-  /* Adjust section heights for mobile */
-  section {
-    min-height: auto;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-  }
-  
-  /* Mobile menu position fix */
-  .md\:hidden {
-    position: relative;
-    z-index: 999;
-  }
+  /* Adjust text sizes */
+  .text-5xl { font-size: 2rem !important; }
+  .text-4xl { font-size: 1.75rem !important; }
+  .text-3xl { font-size: 1.5rem !important; }
+  .text-2xl { font-size: 1.25rem !important; }
+  .text-xl { font-size: 1.125rem !important; }
+  .text-lg { font-size: 1rem !important; }
 }
 
-/* ========== Very small screens ========== */
 @media (max-width: 480px) {
   html {
     font-size: 14px;
   }
   
-  /* Further reduce motion */
-  * {
-    animation-duration: 0.2s !important;
-    transition-duration: 0.2s !important;
+  .container,
+  .max-w-7xl,
+  .max-w-6xl,
+  .max-w-4xl {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
   
-  /* Container padding for small screens */
-  .container {
-    padding: 0 0.5rem;
-  }
-  
-  /* Adjust grid gaps */
-  .grid {
-    gap: 0.75rem !important;
-  }
+  /* Further reduce text sizes */
+  .text-5xl { font-size: 1.75rem !important; }
+  .text-4xl { font-size: 1.5rem !important; }
+  .text-3xl { font-size: 1.25rem !important; }
+  .text-2xl { font-size: 1.125rem !important; }
+  .text-xl { font-size: 1rem !important; }
+  .text-lg { font-size: 0.875rem !important; }
 }
 
-/* ========== Testimonials: Two-Row Continuous Marquee ========== */
+/* ========== Marquee Styles ========== */
 .marquee-row {
   overflow: hidden;
   width: 100%;
-  position: relative;
+  max-width: 100vw;
 }
 
 .marquee-track {
@@ -182,305 +171,131 @@ section {
 }
 
 @keyframes marqueeScroll {
-  0%   { transform: translateX(0); }
+  0% { transform: translateX(0); }
   100% { transform: translateX(-33.333%); }
 }
 
-/* ========== Responsive Image Fixes ========== */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-}
-
-/* Profile image responsive sizing */
-.rounded-full {
-  width: 100%;
-  max-width: 16rem; /* Max size for large screens */
-}
-
-/* ========== Form Elements ========== */
-input, textarea, select, button {
-  width: 100%;
-  max-width: 100%;
-}
-
-/* ========== Responsive Typography ========== */
-h1, h2, h3, h4, h5, h6, p {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  hyphens: auto;
-}
-
-/* ========== Responsive Tweaks ========== */
-@media (max-width: 768px) {
-  .marquee-track {
-    animation-duration: 24s;
-  }
-  .marquee-track--reverse {
-    animation-duration: 28s;
-  }
-  
-  /* Responsive text sizes */
-  .text-2xl { font-size: 1.5rem !important; }
-  .text-xl { font-size: 1.25rem !important; }
-  .text-lg { font-size: 1.125rem !important; }
-  .text-base { font-size: 1rem !important; }
-  .text-sm { font-size: 0.875rem !important; }
-  .text-xs { font-size: 0.75rem !important; }
-}
-
-@media (max-width: 480px) {
-  .marquee-track {
-    animation-duration: 20s;
-  }
-  .marquee-track--reverse {
-    animation-duration: 24s;
-  }
-  
-  /* Even smaller text on very small screens */
-  .text-2xl { font-size: 1.25rem !important; }
-  .text-xl { font-size: 1.125rem !important; }
-  .text-lg { font-size: 1rem !important; }
-  .text-base { font-size: 0.875rem !important; }
-  .text-sm { font-size: 0.75rem !important; }
-  .text-xs { font-size: 0.625rem !important; }
-}
-
-/* ========== Accessibility: Respect Reduced Motion ========== */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  .marquee-track,
-  .marquee-track--reverse {
-    animation: none !important;
-    transform: translateX(0) !important;
-  }
-  
-  * {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-
-/* ========== Hide scrollbar in marquee rows only ========== */
+/* Hide scrollbar for marquee */
 .marquee-row::-webkit-scrollbar {
   display: none;
 }
+
 .marquee-row {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
-/* ========== Mobile Safari fixes ========== */
+/* ========== Button Touch Targets ========== */
+button, a {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* ========== iOS Specific Fixes ========== */
 @supports (-webkit-touch-callout: none) {
-  .viewport-height {
+  /* iOS only */
+  body {
+    position: relative;
+    height: 100vh;
     height: -webkit-fill-available;
   }
   
-  /* Fix iOS viewport issues */
-  #page {
-    height: calc(100vh - 4rem);
-    height: calc(100dvh - 4rem);
-    height: calc(-webkit-fill-available - 4rem);
-  }
-  
-  /* Fix iOS bounce scroll */
-  body {
-    position: fixed;
-    width: 100%;
+  main {
+    height: 100vh;
+    height: -webkit-fill-available;
   }
 }
 
-/* ========== Prevent flash of unstyled content ========== */
-.container {
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-
-/* ========== Focus styles for accessibility ========== */
-button:focus,
-a:focus,
-input:focus,
-textarea:focus {
-  outline: 2px solid #a855f7;
-  outline-offset: 2px;
-}
-
-/* ========== Grid and Flexbox Responsive Adjustments ========== */
-@media (max-width: 768px) {
-  /* Convert multi-column grids to single column */
-  .grid {
-    grid-template-columns: 1fr !important;
-  }
-  
-  /* Stack flex items on mobile */
-  .flex-row {
-    flex-direction: column !important;
-  }
-  
-  /* Full width buttons on mobile */
-  .sm\:w-auto {
-    width: 100% !important;
-  }
-}
-
-/* ========== Project Cards Mobile Fix ========== */
-@media (max-width: 640px) {
-  .project-card {
-    width: 100%;
-    max-width: 100%;
-  }
-  
-  .project-card img {
-    width: 100%;
-    height: auto;
-    max-height: 200px;
-    object-fit: cover;
-  }
-}
-
-/* ========== Skills Cards Mobile Fix ========== */
-.skill-card {
-  width: 100%;
-  min-width: 0;
-  overflow: hidden;
-}
-
-/* ========== Mobile Navigation Fixes ========== */
-@media (max-width: 768px) {
-  /* Mobile menu overlay */
-  nav.md\:hidden {
-    width: 100%;
-    max-width: 100vw;
-    overflow-x: hidden;
-  }
-  
-  /* Ensure header doesn't cause horizontal scroll */
-  header .container {
-    width: 100%;
-    max-width: 100%;
-  }
-}
-
-/* ========== Form Responsive Fixes ========== */
-@media (max-width: 768px) {
-  form {
-    width: 100%;
-  }
-  
-  /* Stack form elements */
-  .grid.lg\:grid-cols-2 {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* ========== Horizontal Overflow Prevention ========== */
-main,
-section,
-div,
-article,
-aside {
-  overflow-x: hidden;
-  max-width: 100vw;
-}
-
-/* Ensure all containers respect viewport width */
-* {
-  max-width: 100vw;
-}
-
-/* ========== Responsive Utilities ========== */
-@media (max-width: 640px) {
-  /* Hide elements that might cause overflow */
-  .overflow-hidden {
-    overflow: hidden !important;
-  }
-  
-  /* Padding adjustments */
-  .px-4 { padding-left: 1rem !important; padding-right: 1rem !important; }
-  .px-6 { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
-  .px-8 { padding-left: 2rem !important; padding-right: 2rem !important; }
-  
-  /* Responsive padding */
-  .sm\:px-4 { padding-left: 1rem !important; padding-right: 1rem !important; }
-  .sm\:px-6 { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
-  .sm\:px-8 { padding-left: 2rem !important; padding-right: 2rem !important; }
-}
-
-/* ========== Back to Top Button Mobile Fix ========== */
-@media (max-width: 640px) {
-  /* Position back to top button to avoid horizontal scroll */
-  button[aria-label="Back to top"] {
-    right: 1rem !important;
-    bottom: 1rem !important;
-  }
-}
-
-/* ========== Print styles (optional) ========== */
-@media print {
-  .marquee-track {
-    animation: none !important;
-  }
-  
-  button {
-    display: none;
-  }
-  
-  /* Show all content for printing */
-  section {
-    min-height: auto !important;
-    page-break-inside: avoid;
-  }
-}
-
-/* ========== Additional Mobile Fixes ========== */
-@media (max-width: 768px) {
-  /* Ensure proper spacing without horizontal overflow */
-  .container {
-    width: calc(100% - 2rem);
-    margin: 0 auto;
-  }
-  
-  /* Fix any absolute positioned elements */
-  [class*="absolute"] {
-    max-width: 100vw;
-  }
-  
-  /* Ensure modals/overlays don't cause scroll */
-  .fixed {
-    max-width: 100vw;
-  }
-}
-
-/* ========== Landscape Mode Adjustments ========== */
-@media (max-height: 600px) and (orientation: landscape) {
-  /* Reduce section heights in landscape */
+/* ========== Landscape Mode ========== */
+@media (orientation: landscape) and (max-height: 600px) {
   section {
     min-height: auto;
-    padding: 2rem 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
   
-  /* Adjust header height */
   header {
     height: 3rem;
   }
   
-  #page {
+  main {
     padding-top: 3rem;
   }
 }
 
-/* ========== Final overflow prevention ========== */
-html, body {
-  max-width: 100%;
-  overflow-x: hidden;
+/* ========== Focus Styles ========== */
+:focus {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
 }
 
-#root {
-  width: 100%;
-  overflow-x: hidden;
-  position: relative;
+/* ========== Selection Styles ========== */
+::selection {
+  background: rgba(168, 85, 247, 0.3);
+  color: white;
+}
+
+/* ========== Scrollbar Styles ========== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.7);
+}
+
+/* ========== Reduced Motion ========== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ========== Print Styles ========== */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  header,
+  button,
+  .marquee-row {
+    display: none !important;
+  }
+  
+  section {
+    page-break-inside: avoid;
+    min-height: auto !important;
+  }
+}
+
+/* ========== Final Overrides ========== */
+* {
+  /* Prevent any element from causing horizontal scroll */
+  max-width: 100% !important;
+}
+
+body, html, #root {
+  /* Ensure no horizontal scroll on body */
+  overflow-x: hidden !important;
+}
+
+/* Fix for white space on right */
+.bg-gradient-to-br {
+  background-attachment: fixed;
+  min-height: 100vh;
 }
