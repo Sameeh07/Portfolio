@@ -124,10 +124,10 @@ export default function App() {
   const rowB = testimonials.filter((_, i) => i % 2 !== 0);
 
   return (
-    <div className="h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-gray-100 flex flex-col overflow-hidden">
+    <div className="h-screen w-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-gray-100 flex flex-col overflow-hidden">
       {/* Header - Fixed positioning */}
-      <header className="fixed top-0 left-0 right-0 z-50 h-16 backdrop-blur-md bg-slate-950/80 border-b border-slate-800">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+      <header className="fixed top-0 left-0 right-0 z-50 h-16 backdrop-blur-md bg-slate-950/80 border-b border-slate-800 w-full">
+        <div className="w-full max-w-[1200px] mx-auto px-4 h-16 flex items-center justify-between">
           <a
             href="#home"
             onClick={(e)=>{e.preventDefault(); safeScrollTo('home');}}
@@ -180,18 +180,31 @@ export default function App() {
       </header>
 
       {/* PAGE SCROLLER - now takes full height and has top padding */}
-      <main
+            <main
         ref={scrollRef}
         id="page"
-        className="flex-1 snap-y snap-proximity overflow-y-auto overflow-x-hidden scroll-smooth pt-16"
+        className="flex-1 snap-y snap-proximity overflow-y-auto overflow-x-hidden scroll-smooth pt-16 w-full"
         style={{
           height: '100vh',
+          maxWidth: '100vw'
         }}
       >
         {/* Hero */}
-        <section id="home" className="min-h-screen snap-start flex items-center">
+        <section
+          id="home"
+          className="min-h-screen snap-start flex items-center"
+          style={{
+            width: '100%',
+            overflowX: 'hidden',
+          }}
+        >
           <div className="container mx-auto px-4 py-8 sm:py-12 md:py-20">
-            <div className="grid gap-8 md:gap-10 md:grid-cols-2 items-center max-w-6xl mx-auto">
+            <div
+              className="grid gap-8 md:gap-10 md:grid-cols-2 items-center max-w-6xl mx-auto"
+              style={{
+                maxWidth: '100%',
+              }}
+            >
               <motion.div
                 className="order-2 md:order-1 text-center md:text-left"
                 initial={{ opacity: 0, y: 16 }}
