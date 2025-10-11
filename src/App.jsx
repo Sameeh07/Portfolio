@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import {
   Cpu, Cloud, Code2, Database, GitBranch, Boxes,
   Wrench, Brain, Rocket, Globe, CheckCircle2, Github, Linkedin,
-  ChevronUp, Menu, X
+  ChevronUp, Menu, X, FileText, ArrowUpRight
 } from "lucide-react";
 
 export default function App() {
@@ -102,11 +102,41 @@ export default function App() {
   ];
 
   const projects = [
-    { title: "Medical voice chatbot", desc: "Medical AI voice enabled chatbot, with conversational history.", link: "https://wizbot-ai-2o.onrender.com/", tags: ["OpenAI API", "Whisper", "Elevenlabs", "Flask", "React"], image: "/projects/wizbotai2.png" },
-    { title: "Music Recommendation System", desc: "Recommends bollywoood music based on user's image input.", link: "https://music-recommendation-system-musrec.onrender.com/", tags: ["Vision model", "gradio ui", "youtube embedding"], image: "/projects/musrecai.png" },
-    { title: "Online medical consultation system", desc: "with live consultation features with doctor.", link: "https://github.com/Sameeh07/Online_medical_consultation", tags: ["mongodb", "expressjs", "reactjs" , "nodejs", "socket.io", "webrtc/peerjs"], image: "/projects/omcs.png" },
-    { title: "Multiple Disease Prediction System", desc: "Disease Prediction using ML with 80% accuracy", link: "https://diseasediagnosisbysam.streamlit.app/", tags: ["LogistricRegression", "SVM", "Streamlit"], image: "/projects/diseasepred.png" },
-    { title: "Hotel Reservation Cancellation Prediction", desc: "Reservation Cancellation Prediction ML model deployed using MLFlow, Docker, Jenkins and GCP", link: "https://github.com/Sameeh07/Hotel-Reservation-Prediction", tags: ["LightGBM", "GCP", "Docker", "Jenkins"], image: "/projects/image.png" },
+    {
+      title: "AI Booking Agent",
+      desc: "LangGraph agent that assembles smart service bookings with price-ranked provider slots and reminders.",
+      link: "https://github.com/Sameeh07/AI-BOOKING-AGENT",
+      tags: ["LangGraph", "tools", "GCP", "docker", "firebase", "Flask"],
+      image: "/projects/AGENT.png"
+    },
+    {
+      title: "Amazon Appliance Price Fine-Tuning",
+      desc: "QLoRA fine-tune of Llama 3.1 8B that predicts appliance prices from Amazon-style listings.",
+      link: "https://github.com/Sameeh07/Amazon-appliances-price-prediction-finetuned-model",
+      tags: ["QLoRA", "Llama 3.1", "Hugging Face"],
+      image: "/projects/FT.png"
+    },
+    {
+      title: "RAG Chatbot — Expert Knowledge Worker",
+      desc: "Enterprise RAG stack with embeddings, Gradio chat UI, vector-space visualisations, and conversation memory.",
+      link: "https://github.com/Sameeh07/RAG_Chatbot",
+      tags: ["LangChain", "ChromaDB", "OpenAIEmbeddings"],
+      image: "/projects/RAG.png"
+    },
+    {
+      title: "Online medical consultation system",
+      desc: "Telemedicine web app with real-time doctor consults, secure chat, and scheduling.",
+      link: "https://github.com/Sameeh07/Online_medical_consultation",
+      tags: ["MongoDB", "Express", "React", "PeerJS"],
+      image: "/projects/omcs.png"
+    },
+    {
+      title: "Hotel Reservation Cancellation Prediction",
+      desc: "MLFlow-delivered model that forecasts hotel cancellations with Jenkins, Docker, and GCP automation.",
+      link: "https://github.com/Sameeh07/Hotel-Reservation-Prediction",
+      tags: ["LightGBM", "GCP", "Docker", "Jenkins"],
+      image: "/projects/MLOPS.png"
+    }
   ];
 
   const testimonials = [
@@ -122,6 +152,7 @@ export default function App() {
 
   const rowA = testimonials.filter((_, i) => i % 2 === 0);
   const rowB = testimonials.filter((_, i) => i % 2 !== 0);
+  const resumeLink = "https://drive.google.com/file/d/1nUnd2QUx0fcbYaMkb2ZhU8uzT6s0CEvM/view";
 
   return (
     <div className="h-screen w-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-gray-100 flex flex-col overflow-hidden">
@@ -296,6 +327,41 @@ export default function App() {
                 <p className="text-gray-400 mt-1 text-sm">Visvesvaraya Technological University (VTU)</p>
               </div>
             </motion.div>
+
+            
+            <motion.div
+              className="mt-8 sm:mt-10"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 rounded-2xl border border-slate-800 bg-slate-900/60 p-5 sm:p-6 shadow-[0_20px_45px_-25px_rgba(139,92,246,0.45)]">
+                <div className="flex items-start gap-3 sm:gap-4 flex-1">
+                  <span className="rounded-2xl bg-fuchsia-900/40 p-3 text-fuchsia-200 shadow-[0_10px_25px_-15px_rgba(244,114,182,0.75)]">
+                    <FileText className="w-6 h-6" />
+                  </span>
+                  <div className="space-y-1">
+                    <p className="text-sm font-semibold text-fuchsia-200 uppercase tracking-wide">Resume</p>
+                    <h3 className="text-base sm:text-lg font-semibold text-white">Dive deeper into my experience</h3>
+                    <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
+                      Explore a detailed timeline of projects, internships, certifications, and the stack I use day-to-day.
+                    </p>
+                  </div>
+                </div>
+                <motion.a
+                  href={resumeLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-fuchsia-600 via-violet-600 to-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-[0_15px_35px_-20px_rgba(99,102,241,0.65)] hover:from-fuchsia-500 hover:via-violet-500 hover:to-indigo-500 transition"
+                >
+                  View Resume
+                  <ArrowUpRight className="w-4 h-4" />
+                </motion.a>
+              </div>
+            </motion.div>
+
           </div>
         </section>
 
@@ -361,35 +427,59 @@ export default function App() {
 
             <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
               {projects.map((p, i) => (
-                <motion.a
-                  key={p.title}
-                  href={p.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group rounded-2xl overflow-hidden border border-slate-800 bg-slate-900/60 hover:bg-slate-900/80 transition-all shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]"
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.05 }}
-                >
-                  {p.image ? (
-                    <img src={p.image} alt={p.title} className="h-40 sm:h-48 w-full object-cover" />
-                  ) : (
-                    <ProjectThumb title={p.title} />
-                  )}
-                  <div className="p-4 sm:p-5">
-                    <h3 className="font-semibold text-base sm:text-lg group-hover:text-fuchsia-300 transition-colors leading-tight">{p.title}</h3>
-                    <p className="mt-2 text-xs sm:text-sm text-gray-300/90 leading-relaxed">{p.desc}</p>
-                    <div className="mt-3 flex flex-wrap gap-1.5 sm:gap-2">
-                      {p.tags.map((t) => (
-                        <span key={t} className="text-xs rounded-full bg-fuchsia-900/30 px-2 py-1 text-fuchsia-200">
-                          {t}
-                        </span>
-                      ))}
+                  <motion.article
+                    key={p.title}
+                    className="group rounded-2xl overflow-hidden border border-slate-800 bg-slate-900/60 hover:bg-slate-900/80 transition-all shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]"
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.05 }}
+                  >
+                    {p.image ? (
+                      p.link ? (
+                        <a href={p.link} target="_blank" rel="noreferrer" className="block">
+                          <img src={p.image} alt={p.title} className="h-40 sm:h-48 w-full object-cover" />
+                        </a>
+                      ) : (
+                        <img src={p.image} alt={p.title} className="h-40 sm:h-48 w-full object-cover" />
+                      )
+                    ) : p.link ? (
+                      <a href={p.link} target="_blank" rel="noreferrer" className="block">
+                        <ProjectThumb title={p.title} />
+                      </a>
+                    ) : (
+                      <ProjectThumb title={p.title} />
+                    )}
+
+                    <div className="p-4 sm:p-5 space-y-3">
+                      <div>
+                        <h3 className="font-semibold text-base sm:text-lg group-hover:text-fuchsia-300 transition-colors leading-tight">{p.title}</h3>
+                        <p className="mt-2 text-xs sm:text-sm text-gray-300/90 leading-relaxed">{p.desc}</p>
+                      </div>
+
+                      <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                        {p.tags.map((t) => (
+                          <span key={t} className="text-xs rounded-full bg-fuchsia-900/30 px-2 py-1 text-fuchsia-200">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex flex-wrap gap-2">
+                        {p.link && (
+                          <a
+                            href={p.link}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-fuchsia-600 to-indigo-600 px-3 py-1.5 text-xs font-semibold text-white shadow-[0_8px_20px_-12px_rgba(99,102,241,0.65)] hover:from-fuchsia-500 hover:to-indigo-500 transition"
+                          >
+                            View
+                          </a>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </motion.a>
-              ))}
+                  </motion.article>
+                ))}
             </div>
           </div>
         </section>
