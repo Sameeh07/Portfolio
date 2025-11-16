@@ -152,7 +152,7 @@ export default function App() {
 
   const rowA = testimonials.filter((_, i) => i % 2 === 0);
   const rowB = testimonials.filter((_, i) => i % 2 !== 0);
-  const resumeLink = "https://drive.google.com/file/d/1-TcOSE6m8bt2L72gZl8WqwMv6fJoOYS9/view?usp=sharing";
+  const resumeLink = "https://drive.google.com/file/d/1JVzbP0PK5lGd322_xeAlVLg-yMv6iubS/view?usp=sharing";
 
   return (
     <div className="h-screen w-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-gray-100 flex flex-col overflow-hidden">
