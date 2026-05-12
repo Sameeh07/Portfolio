@@ -1,5 +1,5 @@
 import { MessageSquareText, Send, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { assistantPrompts } from "../data/portfolio";
 
 const ASSISTANT_ENDPOINT =
@@ -13,6 +13,10 @@ const createId = () =>
   typeof crypto !== "undefined" && crypto.randomUUID
     ? crypto.randomUUID()
     : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+const isCompactViewport = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(max-width: 600px)").matches;
 
 const initialMessages = [
   {
@@ -29,18 +33,91 @@ export function AssistantWidget() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [streamingId, setStreamingId] = useState(null);
+  const messagesRef = useRef(null);
   const messageEndRef = useRef(null);
   const inputRef = useRef(null);
+  const shouldAutoScrollRef = useRef(true);
+
+  const openAssistant = useCallback(() => {
+    shouldAutoScrollRef.current = true;
+    setOpen(true);
+  }, []);
+
+  const closeAssistant = useCallback(() => {
+    inputRef.current?.blur();
+    setOpen(false);
+  }, []);
+
+  const handleMessagesScroll = useCallback(() => {
+    const node = messagesRef.current;
+    if (!node) return;
+
+    const distanceFromBottom = node.scrollHeight - node.scrollTop - node.clientHeight;
+    shouldAutoScrollRef.current = distanceFromBottom < 96;
+  }, []);
 
   useEffect(() => {
-    if (open) {
-      window.setTimeout(() => inputRef.current?.focus(), 120);
-    }
+    if (!open || isCompactViewport()) return undefined;
+
+    const focusTimer = window.setTimeout(() => inputRef.current?.focus(), 120);
+    return () => window.clearTimeout(focusTimer);
   }, [open]);
 
   useEffect(() => {
-    messageEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [messages, loading, open]);
+    if (!open || !shouldAutoScrollRef.current) return;
+
+    window.requestAnimationFrame(() => {
+      messageEndRef.current?.scrollIntoView({
+        behavior: streamingId ? "auto" : "smooth",
+        block: "end",
+      });
+    });
+  }, [messages, loading, open, streamingId]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    if (isCompactViewport()) {
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const setAssistantHeight = () => {
+      const height = window.visualViewport?.height || window.innerHeight;
+      document.documentElement.style.setProperty("--assistant-viewport-height", `${height}px`);
+    };
+
+    setAssistantHeight();
+    window.visualViewport?.addEventListener("resize", setAssistantHeight);
+    window.addEventListener("resize", setAssistantHeight);
+
+    return () => {
+      window.visualViewport?.removeEventListener("resize", setAssistantHeight);
+      window.removeEventListener("resize", setAssistantHeight);
+      document.documentElement.style.removeProperty("--assistant-viewport-height");
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        closeAssistant();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [closeAssistant, open]);
 
   const submitMessage = async (value) => {
     const message = value.trim();
@@ -57,6 +134,7 @@ export function AssistantWidget() {
     setInput("");
     setLoading(true);
     setStreamingId(assistantId);
+    shouldAutoScrollRef.current = true;
 
     try {
       const response = await fetch(ASSISTANT_ENDPOINT, {
@@ -152,7 +230,7 @@ export function AssistantWidget() {
       <button
         type="button"
         className={`assistant-launcher ${open ? "assistant-launcher--hidden" : ""}`}
-        onClick={() => setOpen(true)}
+        onClick={openAssistant}
         aria-label="Open Sameeh assistant"
       >
         <MessageSquareText className="h-5 w-5" aria-hidden="true" />
@@ -171,14 +249,14 @@ export function AssistantWidget() {
             <button
               type="button"
               className="assistant-icon-button"
-              onClick={() => setOpen(false)}
+              onClick={closeAssistant}
               aria-label="Close assistant"
             >
               <X className="h-5 w-5" aria-hidden="true" />
             </button>
           </div>
 
-          <div className="assistant-messages">
+          <div ref={messagesRef} className="assistant-messages" onScroll={handleMessagesScroll}>
             {messages.map((message) => (
               <div
                 key={message.id}

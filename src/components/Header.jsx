@@ -17,13 +17,14 @@ export function Header() {
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-8">
         <a
           href="#top"
-          className="group flex items-center gap-3"
+          className="brand-link group flex items-center gap-3"
           onClick={closeMenu}
           aria-label="Abdul Sameeh K home"
         >
           <span className="brand-mark">AS</span>
-          <span className="hidden text-sm font-semibold tracking-tight text-white sm:inline">
-            Abdul Sameeh K
+          <span className="brand-name">
+            <span className="brand-name-full">Abdul Sameeh K</span>
+            <span className="brand-name-short">Sameeh K</span>
           </span>
         </a>
 

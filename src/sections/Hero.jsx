@@ -6,7 +6,7 @@ import { profile } from "../data/portfolio";
 export function Hero() {
   return (
     <section id="top" className="hero-section">
-      <div className="mx-auto grid min-h-[calc(100svh-4rem)] w-full max-w-7xl items-center gap-12 px-5 pb-16 pt-24 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:px-8 lg:pt-28">
+      <div className="hero-inner mx-auto grid min-h-[calc(100svh-4rem)] w-full max-w-7xl items-center gap-12 px-5 pb-16 pt-24 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:px-8 lg:pt-28">
         <Reveal>
           <div className="max-w-3xl">
             <p className="section-eyebrow mb-5">AI engineer and full-stack builder</p>
