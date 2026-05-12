@@ -19,7 +19,7 @@ const initialMessages = [
     id: "intro",
     role: "assistant",
     content:
-      "Ask me anything about Sameeh's work or background.",
+      "Ask anything about my work or background.",
   },
 ];
 
@@ -116,7 +116,7 @@ export function AssistantWidget() {
               ? {
                   ...item,
                   content:
-                    "I could not generate an answer this time. Please try a more specific question about Sameeh's work.",
+                    "I could not generate an answer this time. Please try a more specific question about my work.",
                 }
               : item,
           ),
