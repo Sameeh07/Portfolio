@@ -3,13 +3,21 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "scripts": {
     "dev": "vite",
+    "dev:vite": "vite --host localhost --port 5174 --strictPort",
+    "dev:netlify": "npx netlify dev",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@langchain/core": "^1.1.45",
+    "@langchain/textsplitters": "^1.0.1",
     "framer-motion": "^12.23.12",
+    "groq-sdk": "^1.2.0",
     "lucide-react": "^0.540.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"

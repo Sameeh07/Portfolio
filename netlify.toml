@@ -2,10 +2,20 @@
   command = "npm run build"
   publish = "dist"
 
+[functions]
+  included_files = ["src/content/knowledgeBase.md"]
+
+[dev]
+  command = "npm run dev:vite"
+  targetPort = 5174
+  port = 8888
+  framework = "#custom"
+  autoLaunch = false
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
