@@ -34,7 +34,6 @@ export function AssistantWidget() {
   const [loading, setLoading] = useState(false);
   const [streamingId, setStreamingId] = useState(null);
   const messagesRef = useRef(null);
-  const messageEndRef = useRef(null);
   const inputRef = useRef(null);
   const shouldAutoScrollRef = useRef(true);
 
@@ -56,6 +55,16 @@ export function AssistantWidget() {
     shouldAutoScrollRef.current = distanceFromBottom < 96;
   }, []);
 
+  const scrollMessagesToBottom = useCallback((behavior = "auto") => {
+    const node = messagesRef.current;
+    if (!node) return;
+
+    node.scrollTo({
+      top: node.scrollHeight,
+      behavior,
+    });
+  }, []);
+
   useEffect(() => {
     if (!open || isCompactViewport()) return undefined;
 
@@ -67,12 +76,9 @@ export function AssistantWidget() {
     if (!open || !shouldAutoScrollRef.current) return;
 
     window.requestAnimationFrame(() => {
-      messageEndRef.current?.scrollIntoView({
-        behavior: streamingId ? "auto" : "smooth",
-        block: "end",
-      });
+      scrollMessagesToBottom(streamingId ? "auto" : "smooth");
     });
-  }, [messages, loading, open, streamingId]);
+  }, [messages, loading, open, scrollMessagesToBottom, streamingId]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -84,25 +90,6 @@ export function AssistantWidget() {
 
     return () => {
       document.body.style.overflow = previousOverflow;
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return undefined;
-
-    const setAssistantHeight = () => {
-      const height = window.visualViewport?.height || window.innerHeight;
-      document.documentElement.style.setProperty("--assistant-viewport-height", `${height}px`);
-    };
-
-    setAssistantHeight();
-    window.visualViewport?.addEventListener("resize", setAssistantHeight);
-    window.addEventListener("resize", setAssistantHeight);
-
-    return () => {
-      window.visualViewport?.removeEventListener("resize", setAssistantHeight);
-      window.removeEventListener("resize", setAssistantHeight);
-      document.documentElement.style.removeProperty("--assistant-viewport-height");
     };
   }, [open]);
 
@@ -225,6 +212,11 @@ export function AssistantWidget() {
     submitMessage(input);
   };
 
+  const handleInputFocus = () => {
+    shouldAutoScrollRef.current = true;
+    window.requestAnimationFrame(() => scrollMessagesToBottom("auto"));
+  };
+
   return (
     <>
       <button
@@ -256,7 +248,12 @@ export function AssistantWidget() {
             </button>
           </div>
 
-          <div ref={messagesRef} className="assistant-messages" onScroll={handleMessagesScroll}>
+          <div
+            ref={messagesRef}
+            className="assistant-messages"
+            onScroll={handleMessagesScroll}
+            aria-live="polite"
+          >
             {messages.map((message) => (
               <div
                 key={message.id}
@@ -269,7 +266,6 @@ export function AssistantWidget() {
                 ) : null}
               </div>
             ))}
-            <div ref={messageEndRef} />
           </div>
 
           {messages.length === 1 ? (
@@ -292,8 +288,12 @@ export function AssistantWidget() {
               ref={inputRef}
               value={input}
               onChange={(event) => setInput(event.target.value)}
+              onFocus={handleInputFocus}
               placeholder="Ask anything about Sameeh..."
               maxLength={900}
+              autoComplete="off"
+              enterKeyHint="send"
+              spellCheck="true"
               aria-label="Ask anything about Sameeh"
             />
             <button type="submit" disabled={loading || !input.trim()} aria-label="Send message">

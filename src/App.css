@@ -427,6 +427,7 @@
 
 .assistant-messages {
   overflow-y: auto;
+  min-height: 0;
   padding: 1rem;
   overscroll-behavior: contain;
   scrollbar-width: none;
@@ -693,12 +694,13 @@
   .assistant-shell {
     inset: 0;
     width: 100%;
-    height: var(--assistant-viewport-height, 100dvh);
+    height: 100dvh;
+    overflow: hidden;
     transform: translateY(1rem);
   }
 
   .assistant-panel {
-    height: var(--assistant-viewport-height, 100dvh);
+    height: 100%;
     min-height: 0;
     grid-template-rows: auto minmax(0, 1fr) auto auto;
     border: 0;
